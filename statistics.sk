@@ -67,13 +67,15 @@ function statwebhook():
 			#*calc
 			set {_x} to {stat.block_break} - {yesterday_stat.block_break}
 			set {_x2} to {stat.block_break} - {yesterday_stat.block_break}
+			set {_x3} to {stat.vote} - {yesterday_stat.vote}
 
 			#*msg
 			set {_l1} to "ブロック破壊数: %{stat.block_break}%(前回比 %{_x}%)"
-			set {_l2} to "ブロック設置数: %{stat.block_place}%(前回比 %{_x}%)"
+			set {_l2} to "ブロック設置数: %{stat.block_place}%(前回比 %{_x2}%)"
+			set {_l3} to "投票数: %{stat.vote}%(前回比 %{_x3}%)"
 
 			#*make
-			add field named "統計(test)" with value "%{_l1}%%nl%%{_l2}%" to fields of embed
+			add field named "統計(test)" with value "%{_l1}%%nl%%{_l2}%%nl%%{_l3}%" to fields of embed
 
 		# Then we just set the current embeds to the embed we just made.
 		set webhook embeds of builder to last embed
