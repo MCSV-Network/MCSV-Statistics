@@ -29,9 +29,20 @@ command /webhooktest:
 at 0:00 in real world:
 	statwebhook()
 	wait a second
-	send "Saving old stats..."
+
+	#*SAVE
+	send "Saving old stats..." to console
 	set {yesterday_stat.block_break} to {stat.block_break}
 	set {yesterday_stat.block_place} to {stat.block_place}
+	set {yesterday_stat.vote} to {stat.vote}
+
+	#*DEL
+	send "Deleting stats..." to console
+	delete {stat.block_break}
+	delete {stat.block_place}
+	delete {stat.vote}
+
+	send "done" to console
 on block break:
 	add 1 to {stat.block_break}
 
