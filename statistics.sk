@@ -40,9 +40,9 @@ command /itstimetosendwebhook:
 		#*DEL
 
 		send "Deleting stats..." to console
-		delete {stat.block_break}
-		delete {stat.block_place}
-		delete {stat.vote}
+		set {stat.block_break} to 0
+		set {stat.block_place} to 0
+		set {stat.vote} to 0
 
 		send "done" to console
 on block break:
@@ -66,7 +66,7 @@ function statwebhook():
 			set embed color of embed to rgb 0, 255, 255
 			#*calc
 			set {_x} to {stat.block_break} - {yesterday_stat.block_break}
-			set {_x2} to {stat.block_break} - {yesterday_stat.block_break}
+			set {_x2} to {stat.block_place} - {yesterday_stat.block_place}
 			set {_x3} to {stat.vote} - {yesterday_stat.vote}
 
 			#*msg
