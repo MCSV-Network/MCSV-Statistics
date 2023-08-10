@@ -23,32 +23,51 @@ command /webhooktest:
 	permission: admin
 	trigger:
 		send "test!"
-		make a new webhook message:
-			set webhook name of builder to "Webhook_TEST" # The new name. It DOES NOT affect the defined name.
-			# Here's the avatar and the text content, both optional.
-			set webhook avatar of builder to "https://cdn.discordapp.com/attachments/907525068903579655/1139123774743117895/mcsvlogo.jpg"
-			set webhook content of builder to "TEST :eyes:"
-
-			# Let's make an embed using DiSky's syntax:
-			make embed:
-				set title of embed to "wowow"
-				set embed color of embed to orange
-
-			# Then we just set the current embeds to the embed we just made.
-			set webhook embeds of builder to last embed
-
-			# Finally, we can make the client send the message we just made.
-			# Because of Discord's limitations, we can only get back the message's ID.
-			make client "stat" send builder and store it in {_msgid}
-
-			# OPTIONAL: Use the 'retrieve message' effect from DiSky in order to get an actual Message.
-			send "Message id: %{_msgid}%" to console
+		statwebhook()
 
 
-
+at 0:00 in real world:
+	statwebhook()
+	wait a second
+	send "Saving old stats..."
+	set {yesterday_stat.block_break} to {stat.block_break}
+	set {yesterday_stat.block_place} to {stat.block_place}
 on block break:
 	add 1 to {stat.block_break}
 
 on block place:
 	add 1 to {stat.block_place}
 
+
+
+function statwebhook():
+	make a new webhook message:
+		set webhook name of builder to "統計君" # The new name. It DOES NOT affect the defined name.
+		# Here's the avatar and the text content, both optional.
+		set webhook avatar of builder to "https://cdn.discordapp.com/attachments/907525068903579655/1139123774743117895/mcsvlogo.jpg"
+
+
+		# Let's make an embed using DiSky's syntax:
+		make embed:
+			set title of embed to "[%now% の統計]"
+			set embed color of embed to rgb 0, 255, 255
+			#*calc
+			set {_x} to {stat.block_break} - {yesterday_stat.block_break}
+			set {_x2} to {stat.block_break} - {yesterday_stat.block_break}
+
+			#*msg
+			set {_l1} to "ブロック破壊数: %{stat.block_break}%(前回比 %{_x}%)"
+			set {_l2} to "ブロック設置数: %{stat.block_place}%(前回比 %{_x}%)"
+
+			#*make
+			add field named "統計(test)" with value "%{_l1}%%nl%%{_l2}%" to fields of embed
+
+		# Then we just set the current embeds to the embed we just made.
+		set webhook embeds of builder to last embed
+
+		# Finally, we can make the client send the message we just made.
+		# Because of Discord's limitations, we can only get back the message's ID.
+		make client "stat" send builder and store it in {_msgid}
+
+		# OPTIONAL: Use the 'retrieve message' effect from DiSky in order to get an actual Message.
+		send "Message id: %{_msgid}%" to console
