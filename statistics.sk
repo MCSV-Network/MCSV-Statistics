@@ -27,7 +27,7 @@ command /webhooktest:
 
 
 command /itstimetosendwebhook:
-	permisson: admin
+	permission: admin
 	trigger:
 		statwebhook()
 		wait a second
