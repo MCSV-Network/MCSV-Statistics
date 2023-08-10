@@ -15,8 +15,8 @@ on skript load:
 	send "Github: &bhttps://github.com/MCSV-Network/MCSV-Statistics" to console
 	send "&b=================" to console
 
-on load:
-	register webhook name "stat" with url "https://discord.com/api/webhooks/1139122215435120750/AubEefvoGbZP2du2ABiO29kOvWv1cRQQbaezn2uhTnUcbrhVFoFSyY7aWXxXbFQ7-JSN"
+on script load:
+	register webhook named "stat" with url "https://discord.com/api/webhooks/1139122215435120750/AubEefvoGbZP2du2ABiO29kOvWv1cRQQbaezn2uhTnUcbrhVFoFSyY7aWXxXbFQ7-JSN"
 	send "registered webhook!" to console
 #!=======[DO NOT EDIT]=======
 command /webhooktest:
