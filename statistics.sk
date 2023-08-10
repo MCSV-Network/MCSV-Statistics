@@ -1,0 +1,54 @@
+#*Statistics v1.0.0
+#*Created by ringoXD
+
+#!=======[DO NOT EDIT]=======
+
+#?Prefix
+Variables:
+	{homev3.prefix} = "&a[&bHomeV3&a]&f"
+
+#?Skript読み込み時のメッセージ
+on skript load:
+	send "&b=================" to console
+	send "&bStatistics &ev1.0.0" to console
+	send "Created by ringoXD" to console
+	send "Github: &bhttps://github.com/MCSV-Network/MCSV-Statistics" to console
+	send "&b=================" to console
+
+on load:
+	register webhook name "stat" with url "https://discord.com/api/webhooks/1139122215435120750/AubEefvoGbZP2du2ABiO29kOvWv1cRQQbaezn2uhTnUcbrhVFoFSyY7aWXxXbFQ7-JSN"
+	send "registered webhook!" to console
+#!=======[DO NOT EDIT]=======
+command /webhooktest:
+	permission: admin
+	trigger:
+		send "test!"
+		make a new webhook message:
+			set webhook name of builder to "Webhook_TEST" # The new name. It DOES NOT affect the defined name.
+			# Here's the avatar and the text content, both optional.
+			set webhook avatar of builder to "https://cdn.discordapp.com/attachments/907525068903579655/1139123774743117895/mcsvlogo.jpg"
+			set webhook content of builder to "TEST :eyes:"
+
+			# Let's make an embed using DiSky's syntax:
+			make embed:
+				set title of embed to "wowow"
+				set embed color of embed to orange
+
+			# Then we just set the current embeds to the embed we just made.
+			set webhook embeds of builder to last embed
+
+			# Finally, we can make the client send the message we just made.
+			# Because of Discord's limitations, we can only get back the message's ID.
+			make client "stat" send builder and store it in {_msgid}
+
+			# OPTIONAL: Use the 'retrieve message' effect from DiSky in order to get an actual Message.
+			send "Message id: %{_msgid}%" to console
+
+
+
+on block break:
+	add 1 to {stat.block_break}
+
+on block place:
+	add 1 to {stat.block_place}
+
